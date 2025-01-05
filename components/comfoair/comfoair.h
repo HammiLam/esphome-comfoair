@@ -352,8 +352,10 @@ protected:
   optional<bool> check_byte_(uint8_t* data, uint8_t &index) {
     const uint8_t byte = data[index];
 
-    if (index == 0)
+    if (index == 0) {
+      encountered_seven_ = false;
       return byte == COMMAND_PREFIX;
+    }      
 
     if (index == 1) {
       if (byte == COMMAND_ACK)
