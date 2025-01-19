@@ -386,6 +386,8 @@ protected:
         }
         encountered_seven_ = true;
       } else {
+        if (encountered_seven_)
+          ESP_LOGW(TAG, "No 0x07 after another one encoutered %02X instead at index.", byte, index);
         encountered_seven_ = false;
       }
       return true;
@@ -397,7 +399,7 @@ protected:
       if (checksum != byte) {
         //ESP_LOG_BUFFER_HEX(TAG, data_, index+1);
         //[10:58:52][W][comfoair:389]: ComfoAir Checksum doesn't match: 0x07!=0xDD (4 3E 09 FA 07 07 00 00 C8)
-        ESP_LOGW(TAG, "Checksum mismatch: r:0x%02X!=c:0x%02X (l:%d cmd:%02X [%02X  %02X %02X  %02X %02X  %02X %02X %02X %02X %02X %02X])", byte, checksum, data_length, data[COMMAND_IDX_MSG_ID], data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10]);
+        ESP_LOGW(TAG, "Checksum mismatch: r:0x%02X!=c:0x%02X (l:%d cmd:%02X [%02X  %02X %02X  %02X %02X  %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X])", byte, checksum, data_length, data[COMMAND_IDX_MSG_ID], data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15], data[16], data[17], data[18], data[19], data[20], data[21], data[22], data[23], data[24], data[25]);
         // Still can't find what is wrong with those checksums.
         //if (data[COMMAND_IDX_MSG_ID] == 0x3e || data[COMMAND_IDX_MSG_ID] == 0xe6 || data[COMMAND_IDX_MSG_ID] == 0xec)
         //  return true;
