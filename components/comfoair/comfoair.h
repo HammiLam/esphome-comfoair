@@ -980,6 +980,7 @@ protected:
   uint8_t proxy_data_[30];
   uint8_t proxy_data_index_{0};
   bool encountered_seven_{false};
+  bool proxy_data_pending_{false};
 
   int8_t update_counter_{-4};
   const int8_t num_update_counter_elements_{9};
