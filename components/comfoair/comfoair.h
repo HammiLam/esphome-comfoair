@@ -221,9 +221,13 @@ public:
       auto check = check_byte_(proxy_data_, proxy_data_index_);
       if (!check.has_value()) {
         ESP_LOGV(TAG, "Proxying command 0x%02X from confosense with %i bytes.", proxy_data_[COMMAND_IDX_MSG_ID], proxy_data_index_+1);
-        write_array(proxy_data_, proxy_data_index_+1);
-        flush();
-        proxy_data_index_ = 0;
+        if (data_index_ == 0) {
+          write_array(proxy_data_, proxy_data_index_+1);
+          flush();
+          proxy_data_index_ = 0;
+        } else {
+          proxy_data_pending_ = true;
+        }
         break;
       } else if (!*check) {
         // wrong data
@@ -238,7 +242,6 @@ public:
       read_byte(&data_[data_index_]);
       auto check = check_byte_(data_, data_index_);
       if (!check.has_value()) {
-
         // finished
         ESP_LOGV(TAG, "Response 0x%02X from confosense with %i bytes.", data_[COMMAND_IDX_MSG_ID], data_index_+1);
         if (data_[COMMAND_ID_ACK] != COMMAND_ACK) {
@@ -247,6 +250,12 @@ public:
         // Proxy result to the display.
         uart_proxy_.write_array(data_, data_index_+1);
         uart_proxy_.flush();
+        if (proxy_data_pending_) {
+          proxy_data_pending_ = false;
+          write_array(proxy_data_, proxy_data_index_+1);
+          flush();
+          proxy_data_index_ = 0;
+        }
         data_index_ = 0;
       } else if (!*check) {
         // wrong data
