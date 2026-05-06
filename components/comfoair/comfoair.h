@@ -318,7 +318,7 @@ protected:
   }
 
   void set_comfort_temperature_(float temperature) {
-    if (temperature <  || 
+    if (temperature < COMFOAIR_MIN_SUPPORTED_TEMP || 
         temperature > COMFOAIR_MAX_SUPPORTED_TEMP) {
       ESP_LOGI(TAG, "Ignoring invalid temperature request: %i", temperature);
       return;
