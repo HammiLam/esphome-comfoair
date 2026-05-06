@@ -20,7 +20,7 @@ static const uint8_t COMFOAIR_MIN_SUPPORTED_TEMP = 12;
 static const uint8_t COMFOAIR_MAX_SUPPORTED_TEMP = 29;
 static const float COMFOAIR_SUPPORTED_TEMP_STEP = 0.5f;
 
-class ComfoAirComponent;
+/*class ComfoAirComponent;
 
 class ComfoAirSizeSelect : public select::Select
 {
@@ -32,7 +32,7 @@ protected:
 
 private:
   ComfoAirComponent *parent_{nullptr};
-};
+};*/
 
 class ComfoAirComponent : public climate::Climate, public api::CustomAPIDevice, public PollingComponent, public uart::UARTDevice {
 public:
