@@ -36,7 +36,7 @@ private:
 
 class ComfoAirComponent : public climate::Climate, public api::CustomAPIDevice, public PollingComponent, public uart::UARTDevice {
 public:
-  // Poll every 600ms
+  // Poll every 20000ms
   ComfoAirComponent() :
   Climate(),
   PollingComponent(20000),
